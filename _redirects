@@ -1,0 +1,35 @@
+# Netlify Redirects and Headers Configuration
+
+# Redirect default Netlify subdomain to custom domain (optional - update with your domain)
+# https://besorah-yeshua.netlify.app/* https://www.besorahyeshua.org/:splat 301!
+
+# Single Page Application routing (if needed in future)
+# /* /index.html 200
+
+# Force HTTPS
+# http://besorahyeshua.org/* https://besorahyeshua.org/:splat 301!
+
+# Redirect common misspellings or old URLs
+/home /index.html 301
+/home.html /index.html 301
+
+# 404 handling
+# /404.html 404
+
+## Security Headers
+/*
+  X-Frame-Options: DENY
+  X-Content-Type-Options: nosniff
+  X-XSS-Protection: 1; mode=block
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: geolocation=(), microphone=(), camera=()
+
+## Cache Control Headers
+/styles/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/scripts/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/*.html
+  Cache-Control: public, max-age=0, must-revalidate
