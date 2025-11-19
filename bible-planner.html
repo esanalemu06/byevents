@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ethiopian Bible Planner</title>
+    <link rel="stylesheet" href="bible-planner.css">
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+</head>
+<body>
+    <div id="bible-planner-app" class="min-h-screen bg-gradient">
+        <div class="max-w-6xl mx-auto">
+            <!-- Enhanced Header with Stats Toggle -->
+            <div class="header-gradient rounded-xl shadow-2xl p-6 mb-6 text-white relative overflow-hidden">
+                <div class="absolute top-0 right-0 w-64 h-64 bg-white opacity-5 rounded-full -mr-32 -mt-32"></div>
+                <div class="absolute bottom-0 left-0 w-48 h-48 bg-white opacity-5 rounded-full -ml-24 -mb-24"></div>
+                
+                <div class="relative">
+                    <h1 class="text-3xl font-bold mb-2 flex items-center gap-3">
+                        <i data-lucide="book-open" class="w-8 h-8"></i>
+                        የኢትዮጵያ ዘመን አቆጣጠር
+                    </h1>
+                    <h2 class="text-2xl mb-4">Ethiopian Calendar & Bible Study Planner</h2>
+                    <div class="flex flex-wrap items-center gap-4 text-sm">
+                        <div class="flex items-center gap-2 bg-white bg-opacity-20 px-3 py-1.5 rounded-full">
+                            <i data-lucide="calendar" class="w-4 h-4"></i>
+                            <span>2017 E.C. (2024-2025)</span>
+                        </div>
+                        <div class="flex items-center gap-2 bg-white bg-opacity-20 px-3 py-1.5 rounded-full">
+                            <i data-lucide="map-pin" class="w-4 h-4"></i>
+                            <span>Arsi, Bale, Guji & Borena</span>
+                        </div>
+                        <button id="stats-toggle" class="flex items-center gap-2 bg-white bg-opacity-20 hover:bg-opacity-30 px-3 py-1.5 rounded-full transition-all ml-auto">
+                            <i data-lucide="award" class="w-4 h-4"></i>
+                            <span id="progress-text">Progress: 0%</span>
+                        </button>
+                    </div>
+                    
+                    <div id="stats-container" class="mt-4 bg-white bg-opacity-10 rounded-lg p-4 backdrop-blur-sm hidden">
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="text-sm">Reading Progress</span>
+                            <span id="progress-count" class="text-sm font-bold">0 / 0 weeks</span>
+                        </div>
+                        <div class="w-full bg-white bg-opacity-20 rounded-full h-3">
+                            <div id="progress-bar" class="h-3 rounded-full transition-all duration-500" style="width: 0%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Enhanced Navigation Tabs -->
+            <div class="bg-white rounded-xl shadow-lg mb-6 p-1.5 flex gap-1">
+                <button data-tab="calendar" class="tab-button flex-1 py-3 px-4 rounded-lg transition-all flex items-center justify-center font-medium text-white shadow-md transform scale-105">
+                    <i data-lucide="calendar" class="w-5 h-5 mr-2"></i>
+                    <span class="hidden sm:inline">Calendar & Events</span>
+                    <span class="sm:hidden">Calendar</span>
+                </button>
+                <button data-tab="reading" class="tab-button flex-1 py-3 px-4 rounded-lg transition-all flex items-center justify-center font-medium text-gray-600 hover:bg-gray-50">
+                    <i data-lucide="book" class="w-5 h-5 mr-2"></i>
+                    <span class="hidden sm:inline">Reading Plans</span>
+                    <span class="sm:hidden">Reading</span>
+                </button>
+                <button data-tab="discipleship" class="tab-button flex-1 py-3 px-4 rounded-lg transition-all flex items-center justify-center font-medium text-gray-600 hover:bg-gray-50">
+                    <i data-lucide="users" class="w-5 h-5 mr-2"></i>
+                    <span class="hidden sm:inline">Discipleship</span>
+                    <span class="sm:hidden">Discipleship</span>
+                </button>
+            </div>
+
+            <!-- Calendar View -->
+            <div id="calendar-view" class="space-y-6">
+                <!-- Enhanced Month Selector -->
+                <div class="bg-white rounded-xl shadow-lg p-6">
+                    <h3 class="text-xl font-bold mb-4 flex items-center gap-2 text-primary">
+                        <i data-lucide="calendar" class="w-6 h-6"></i>
+                        Select Ethiopian Month
+                    </h3>
+                    <div id="month-selector" class="grid grid-cols-2 md:grid-cols-4 gap-3">
+                        <!-- Months will be populated by JavaScript -->
+                    </div>
+                </div>
+
+                <!-- Enhanced Selected Month Details -->
+                <div id="month-details" class="bg-white rounded-xl shadow-lg p-6">
+                    <!-- Content will be populated by JavaScript -->
+                </div>
+            </div>
+
+            <!-- Reading Plans View -->
+            <div id="reading-view" class="space-y-6 hidden">
+                <!-- Enhanced Plan Selector -->
+                <div class="bg-white rounded-xl shadow-lg p-6">
+                    <h3 class="text-xl font-bold mb-4 flex items-center gap-2 text-primary">
+                        <i data-lucide="book" class="w-6 h-6"></i>
+                        Choose Your Reading Plan
+                    </h3>
+                    <div class="grid md:grid-cols-2 gap-4">
+                        <button data-plan="chronological" class="plan-button p-6 rounded-xl text-left transition-all border-2 text-white shadow-lg scale-105 border-transparent">
+                            <div class="flex items-center gap-3 mb-2">
+                                <i data-lucide="book-open" class="w-6 h-6"></i>
+                                <div class="font-bold text-lg">One-Year Chronological</div>
+                            </div>
+                            <div class="text-sm opacity-90">Entire Bible in story order • 3-4 chapters/day • 48 weeks</div>
+                        </button>
+                        <button data-plan="nt90" class="plan-button p-6 rounded-xl text-left transition-all border-2 bg-gray-50 text-gray-700 hover:bg-gray-100 border-gray-200">
+                            <div class="flex items-center gap-3 mb-2">
+                                <i data-lucide="target" class="w-6 h-6"></i>
+                                <div class="font-bold text-lg">90-Day New Testament</div>
+                            </div>
+                            <div class="text-sm text-gray-600">Perfect for new believers • 3 chapters/day • Complete NT in 3 months</div>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Chronological Plan -->
+                <div id="chronological-plan" class="bg-white rounded-xl shadow-lg p-6">
+                    <!-- Content will be populated by JavaScript -->
+                </div>
+
+                <!-- 90-Day NT Plan -->
+                <div id="nt90-plan" class="bg-white rounded-xl shadow-lg p-6 hidden">
+                    <!-- Content will be populated by JavaScript -->
+                </div>
+            </div>
+
+            <!-- Discipleship View -->
+            <div id="discipleship-view" class="space-y-6 hidden">
+                <div id="discipleship-content" class="bg-white rounded-xl shadow-lg p-6">
+                    <!-- Content will be populated by JavaScript -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="bible-planner.js"></script>
+</body>
+</html>
